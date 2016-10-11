@@ -19,7 +19,6 @@ public class GraphWriter {
         for (int x : path)
             output.setRGB(Main.delinearize(x)[1], Main.delinearize(x)[0], Color.BLUE.getRGB());
         ImageIO.write(output, "bmp", new File(s));
-
     }
 
 }

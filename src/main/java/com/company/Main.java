@@ -2,15 +2,12 @@ package com.company;
 
 import com.google.caliper.AfterExperiment;
 import com.google.caliper.BeforeExperiment;
-import com.google.caliper.Benchmark;
 import com.google.caliper.api.Macrobenchmark;
 import com.google.caliper.api.VmOptions;
 import com.google.caliper.runner.CaliperMain;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 @VmOptions("-XX:-TieredCompilation")
 public class Main {
@@ -18,8 +15,8 @@ public class Main {
     public static int[] array;
     public static ArrayList<Integer> reds;
     public static int count = 1;
+    public static int[] offsets = new int[]{-size - 1, -size, -size + 1, -1, 1, size - 1, size, size + 1};
     ArrayList<Integer> list1;
-    public static int[] offsets = new int[]{-size-1,-size,-size+1,-1,1,size-1,size,size+1};
 
     public static void main(String[] args) throws IOException {
         CaliperMain.main(Main.class, args);

@@ -3,7 +3,6 @@ package com.company;
 import java.util.*;
 
 import static com.company.Main.delinearize;
-import static com.company.Main.getAdjacentCells;
 import static com.company.Main.offsets;
 
 public class AStar {
