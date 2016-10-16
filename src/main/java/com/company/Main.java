@@ -15,15 +15,15 @@ public class Main {
     public static int[] array;
     public static ArrayList<Integer> reds;
     public static int count = 1;
-    public static int[] offsets = new int[]{-size - 1, -size, -size + 1, -1, 1, size - 1, size, size + 1};
+    public static int[] offsets = new int[]{-size, -1, 1, size, -size - 1, -size + 1, size - 1, size + 1};
     ArrayList<Integer> list1;
 
     public static void main(String[] args) throws IOException {
         CaliperMain.main(Main.class, args);
     }
 
-    public static int linearize(int... x) {
-        return x[0] * size + x[1];
+    public static int linearize(int... p) {
+        return p[0] * size + p[1];
     }
 
     public static int[] delinearize(int x) {
@@ -75,6 +75,18 @@ public class Main {
     @AfterExperiment()
     public void printResult() throws IOException {
         System.out.println(list1);
+        System.out.println(getLength());
         GraphWriter.writeBMPImage("Labirint.bmp", list1, "output" + count++ + ".bmp");
+    }
+
+    public double getLength() {
+        double sum = list1.get(0);
+        int cur = list1.get(0);
+        for (int i = 1; i < list1.size(); i++) {
+            sum += AStar.heuristicCost(cur, list1.get(i));
+            cur = list1.get(i);
+        }
+        return sum;
+
     }
 }

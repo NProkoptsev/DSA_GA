@@ -1,6 +1,9 @@
 package com.company;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 import static com.company.Main.delinearize;
 import static com.company.Main.offsets;
@@ -21,15 +24,12 @@ public class AStar {
         this.goal = goal;
         this.size = size;
         closedSet = new HashSet<>();
-        openSet = new PriorityQueue<>(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                if (fScore[o1] - fScore[o2] > 0)
-                    return 1;
-                else if (fScore[o1] - fScore[o2] < 0)
-                    return -1;
-                else return 0;
-            }
+        openSet = new PriorityQueue<>((o1, o2) -> {
+            if (fScore[o1] - fScore[o2] > 0)
+                return 1;
+            else if (fScore[o1] - fScore[o2] < 0)
+                return -1;
+            else return 0;
         });
         openSet.add(start);
         cameFrom = new int[size * size];
@@ -43,7 +43,7 @@ public class AStar {
         fScore[this.start] = heuristicCost(this.start, this.goal);
     }
 
-    private double heuristicCost(int start, int goal) {
+    public static double heuristicCost(int start, int goal) {
         int h = delinearize(start)[0] - delinearize(goal)[0],
                 w = delinearize(start)[1] - delinearize(goal)[1];
         return Math.sqrt(h * h + w * w);

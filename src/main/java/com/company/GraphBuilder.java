@@ -9,28 +9,25 @@ public class GraphBuilder {
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 if (array[linearize(y, x)] == -1)
-                    markAsUnavailable(y, x, newArray, size);
+                    markAsUnavailable(newArray, y, x, 2, size);
             }
         }
 
-        for (int i = 0; i < size; i++) {
-            newArray[linearize(0, i)] = -1;
-            newArray[linearize(1, i)] = -1;
-            newArray[linearize(size - 1, i)] = -1;
-            newArray[linearize(size - 2, i)] = -1;
-            newArray[linearize(i, 0)] = -1;
-            newArray[linearize(i, 1)] = -1;
-            newArray[linearize(i, size - 1)] = -1;
-            newArray[linearize(i, size - 2)] = -1;
-        }
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < 2; j++) {
+                newArray[linearize(j, i)] = -1;
+                newArray[linearize(size - (1 + j), i)] = -1;
+                newArray[linearize(i, j)] = -1;
+                newArray[linearize(i, size - (1 + j))] = -1;
+            }
         return newArray;
     }
 
-    private static void markAsUnavailable(int y, int x, int[] newArray, int size) {
-        int x1 = x - 2 > 0 ? x - 2 : 0;
-        int y1 = y - 2 > 0 ? y - 2 : 0;
-        int x2 = x + 2 < size ? x + 2 : 0;
-        int y2 = y + 2 < size ? y + 2 : 0;
+    private static void markAsUnavailable(int[] newArray, int y, int x, int rad, int size) {
+        int x1 = x - rad > 0 ? x - rad : 0;
+        int y1 = y - rad > 0 ? y - rad : 0;
+        int x2 = x + rad < size ? x + rad : size - 1;
+        int y2 = y + rad < size ? y + rad : size - 1;
 
         for (int i = y1; i <= y2; i++)
             for (int j = x1; j <= x2; j++) {
