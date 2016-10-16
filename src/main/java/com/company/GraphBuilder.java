@@ -9,12 +9,12 @@ public class GraphBuilder {
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 if (array[linearize(y, x)] == -1)
-                    markAsUnavailable(newArray, y, x, 2, size);
+                    markAsUnavailable(newArray, y, x, 3, size);
             }
         }
 
         for (int i = 0; i < size; i++)
-            for (int j = 0; j < 2; j++) {
+            for (int j = 0; j < 3; j++) {
                 newArray[linearize(j, i)] = -1;
                 newArray[linearize(size - (1 + j), i)] = -1;
                 newArray[linearize(i, j)] = -1;
