@@ -80,7 +80,7 @@ public class Main {
     }
 
     public double getLength() {
-        double sum = list1.get(0);
+        double sum = 0;
         int cur = list1.get(0);
         for (int i = 1; i < list1.size(); i++) {
             sum += AStar.heuristicCost(cur, list1.get(i));
