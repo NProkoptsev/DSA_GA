@@ -11,11 +11,13 @@ import java.util.ArrayList;
 
 @VmOptions("-XX:-TieredCompilation")
 public class Main {
-    public static int size = 480;
-    public static int[] array;
-    public static ArrayList<Integer> reds;
-    public static int count = 1;
+    private static int size = 480;
     public static int[] offsets = new int[]{-size, -1, 1, size, -size - 1, -size + 1, size - 1, size + 1};
+    public static int[] offsets1 = new int[]{-size, -1, 1, size};
+    public static int[] offsets2 = new int[]{-size - 1, -size + 1, size - 1, size + 1};
+    private static int[] array;
+    private static ArrayList<Integer> reds;
+    private static int count = 1;
     ArrayList<Integer> list1;
 
     public static void main(String[] args) throws IOException {
@@ -56,9 +58,8 @@ public class Main {
 
     @BeforeExperiment
     public void setUp() throws IOException {
-
         reds = new ArrayList<>();
-        array = GraphReader.seeBMPImage("Labirint.bmp", reds, 7);
+        array = GraphReader.seeBMPImage("Labirint1.bmp", reds, 7);
         array = GraphBuilder.build(array, size);
     }
 
@@ -72,11 +73,12 @@ public class Main {
         list1 = new AStar(array, size, reds.get(0), reds.get(1)).findRoute();
     }
 
-    @AfterExperiment()
+    @AfterExperiment
     public void printResult() throws IOException {
+
         System.out.println(list1);
+        GraphWriter.writeBMPImage("Labirint1.bmp", list1, "output" + ++count + ".bmp");
         System.out.println(getLength());
-        GraphWriter.writeBMPImage("Labirint.bmp", list1, "output" + count++ + ".bmp");
     }
 
     public double getLength() {
